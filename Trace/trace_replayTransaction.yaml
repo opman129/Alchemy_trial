@@ -1,0 +1,32 @@
+openapi: 3.1.0
+info:
+  title: Replay Transaction
+  version: '1.0'
+servers:
+  - url: 'https://eth-mainnet.g.alchemy.com/v2 '
+paths:
+  /{apiKey}:
+    post:
+      summary: trace_replayTransaction
+      description: Traces a call to eth_sendRawTransaction without making the call, returning the traces.
+      tags: []
+      parameters:
+        - name: apiKey
+          in: path
+          schema:
+            type: string
+            default: demo
+          required: true
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: ../evm_body.yaml#/trace_replayTransaction
+      responses:
+        '200':
+          description: 'Returns - Block traces'
+          content:
+            application/json:
+              schema:
+                $ref: ../evm_responses.yaml#/trace_call
+      operationId: trace-replayTransaction

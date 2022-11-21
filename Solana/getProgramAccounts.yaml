@@ -1,0 +1,34 @@
+openapi: 3.1.0
+info:
+  title: Program Account
+  version: '1.0'
+servers:
+  - url: 'https://solana-mainnet.g.alchemy.com/v2'
+paths:
+  /{apiKey}:
+    post:
+      summary: getProgramAccounts
+      description: Returns all accounts owned by the provided program Pubkey.
+      tags: []
+      parameters:
+        - name: apiKey
+          in: path
+          schema:
+            type: string
+            default: demo
+          required: true
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: solana_body.yaml#/getProgramAccounts
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: solana_responses.yaml#/getProgramAccounts
+      operationId: getProgramAccounts
+      x-readme:
+        explorer-enabled: false

@@ -1,0 +1,68 @@
+openapi: 3.1.0
+info:
+  title: 💸 Transfers API (Tx History)
+  version: '1.0'
+servers:
+  - description: Ethereum
+    url: 'https://eth-mainnet.g.alchemy.com/v2'
+  - description: Polygon
+    url: 'https://polygon-mainnet.g.alchemy.com/v2'
+  - description: Arbitrum
+    url: 'https://arb-mainnet.g.alchemy.com/v2'
+  - description: Optimism
+    url: 'https://opt-mainnet.g.alchemy.com/v2'
+paths:
+  /{apiKey}:
+    post:
+      summary: alchemy_getAssetTransfers
+      description: 'The Transfers API allows you to easily fetch historical transactions for any address across Ethereum and supported L2s including Polygon, Arbitrum, and Optimism.'
+      tags: ['Transfers API Endpoints']
+      parameters:
+        - name: apiKey
+          in: path
+          schema:
+            type: string
+            default: demo
+          required: true
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: evm_body.yaml#/alchemy_getAssetTransfers # path for using github actions to update, to update from CLI using rdme change to ../evm_body.yaml#/alchemy_getAssetTransfers
+      x-readme:
+        samples-languages:
+          - curl
+          - javascript
+        code-samples:
+          - language: javascript
+            name: Alchemy SDK
+            code: |
+              // Setup: npm install alchemy-sdk
+              import { Alchemy, Network } from "alchemy-sdk";
+
+              const config = {
+                apiKey: "demo",
+                network: Network.ETH_MAINNET,
+              };
+              const alchemy = new Alchemy(config);
+
+              // Address we want get NFT mints from
+              const toAddress = "0x1E6E8695FAb3Eb382534915eA8d7Cc1D1994B152";
+
+              const res = await alchemy.core.getAssetTransfers({
+                fromBlock: "0x0",
+                fromAddress: "0x0000000000000000000000000000000000000000",
+                toAddress: toAddress,
+                excludeZeroValue: true,
+                category: ["erc721", "erc1155"],
+              });
+
+              console.log(res);
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: evm_responses.yaml#/alchemy_getAssetTransfers # path for using github actions to update, to update from CLI using rdme change to ../evm_responses.yaml#/alchemy_getAssetTransfers
+      operationId: alchemy-getAssetTransfers

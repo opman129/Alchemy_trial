@@ -1,0 +1,33 @@
+openapi: 3.1.0
+info:
+  title: alchemy_getGasOptimizedTransactionStatus
+  version: '1.0'
+servers:
+  - url: 'https://eth-mainnet.g.alchemy.com/v2 '
+paths:
+  /{apiKey}:
+    post:
+      operationId: alchemy_getGasOptimizedTransactionStatus
+      summary: alchemy_getGasOptimizedTransactionStatus
+      description: Returns the progression/status of transactions sent in via alchemy_sendGasOptimizedTransaction
+      tags: []
+      parameters:
+        - name: apiKey
+          in: path
+          schema:
+            type: string
+            default: demo
+          required: true
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: ../evm_body.yaml#/get_signed_txns_status_param
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: ../evm_responses.yaml#/getTxn_result_response
+      operationId: alchemy-getGasOptimizedTransactionStatus
